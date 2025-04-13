@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart - COVAI CART</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Your Cart</h1>
+    <nav>
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    </nav>
+  </header>
+
+  <section class="cart-items">
+    <p>Loading cart...</p>
+  </section>
+
+  <script>
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const section = document.querySelector('.cart-items');
+
+    function updateCart() {
+      if (cartItems.length === 0) {
+        section.innerHTML = "<p>Your cart is currently empty.</p>";
+      } else {
+        let total = 0;
+        let html = "<ul>";
+        cartItems.forEach((item, index) => {
+          html += `
+            <li>
+              ${item.name} - Rs.${item.price}
+              <button onclick="removeFromCart(${index})">Remove</button>
+            </li>
+          `;
+          total += item.price;
+        });
+        html += "</ul>";
+        html += `<p><strong>Total: Rs.${total}</strong></p>`;
+        section.innerHTML = html;
+      }
+    }
+
+    function removeFromCart(index) {
+      cartItems.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+      updateCart();
+    }
+
+    updateCart();
+  </script>
+</body>
+</html>
