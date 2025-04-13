@@ -1,0 +1,15 @@
+[
+    {
+      "id": 1,
+      "name": "Herbal Soap",
+      "price": 100,
+      "image": "images/soap.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Face Cream",
+      "price": 120,
+      "image": "images/cream.jpg"
+    }
+  ]
+  

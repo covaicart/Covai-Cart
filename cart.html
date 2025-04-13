@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Covai Cart - Your Cart</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, textarea { display: block; margin-bottom: 10px; width: 300px; }
+    button { padding: 10px 20px; background: green; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <section class="cart-items"></section>
+
+  <h2>Customer Information</h2>
+  <label>Name:</label>
+  <input type="text" id="customerName" required>
+  <label>Email:</label>
+  <input type="email" id="customerEmail" required>
+  <label>Phone:</label>
+  <input type="text" id="customerPhone" required>
+  <label>Address:</label>
+  <textarea id="customerAddress" required></textarea>
+
+  <button onclick="placeOrder()">Place Order</button>
+
+  <script>
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const section = document.querySelector('.cart-items');
+
+    function updateCart() {
+      if (cartItems.length === 0) {
+        section.innerHTML = "<p>Your cart is empty.</p>";
+      } else {
+        let total = 0;
+        let html = "<ul>";
+        cartItems.forEach((item, index) => {
+          html += `<li>${item.name} - Rs.${item.price}</li>`;
+          total += item.price;
+        });
+        html += "</ul>";
+        html += `<p><strong>Total: Rs.${total}</strong></p>`;
+        section.innerHTML = html;
+      }
+    }
+
+    function placeOrder() {
+      const name = document.getElementById("customerName").value;
+      const email = document.getElementById("customerEmail").value;
+      const phone = document.getElementById("customerPhone").value;
+      const address = document.getElementById("customerAddress").value;
+
+      if (!name || !email || !phone || !address) {
+        alert("Please fill in all customer details.");
+        return;
+      }
+
+      fetch("http://localhost:3000/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          customer: { name, email, phone, address },
+          cart: cartItems
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        localStorage.removeItem("cart");
+        location.reload();
+      })
+      .catch(err => {
+        console.error("Error placing order:", err);
+        alert("Something went wrong.");
+      });
+    }
+
+    updateCart();
+  </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+[{"name":"Herbal Soap","price":100}]
+[{"name":"Face Cream","price":120},{"name":"Face Cream","price":120}]
+[{"name":"Face Cream","price":120},{"name":"Face Cream","price":120}]
+[{"name":"Face Cream","price":120},{"name":"Herbal Soap","price":100}]
+{"customer":{"name":"SARAVANAN","email":"SARAVANA123@GMAIL.COM","phone":"1234567890","address":"COIMBATORE"},"cart":[{"name":"Face Cream","price":120},{"name":"Herbal Soap","price":100}],"timestamp":"2025-04-13T09:34:12.678Z"}

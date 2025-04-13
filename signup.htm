@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Signup - Covai Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="contact-form">
+  <h2>📝 Admin Signup</h2>
+  <form onsubmit="signup(event)">
+    <input type="text" id="username" placeholder="Choose a Username" required>
+    <input type="password" id="password" placeholder="Choose a Password" required>
+    <button type="submit">Sign Up</button>
+    <p id="signupMsg" style="color: green;"></p>
+  </form>
+  <p>Already have an account? <a href="login.html">Login here</a></p>
+
+  <script>
+    function signup(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("signupMsg").textContent = data.message;
+      });
+    }
+  </script>
+</body>
+</html>
